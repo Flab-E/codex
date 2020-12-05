@@ -7,15 +7,9 @@
 >   Abhinav
 
 ### Overview:
-The root folder of the app contains all the contents required for the backend, namely:
-```
-package.json
-package-lock.json
-server.js
-```
-
-The directory app within the codex directory contains all the required contents for the front-end  
-The directory `node_modules` has been removed from each directory: **codex** and **app**
+The root folder of the app contains all the contents required for the backend.  
+The directory `frontend` within the codex directory contains all the required contents for the front-end  
+The directory `node_modules` has been removed from each directory: **codex** and **app**  
 
 ### Launching the project:
 ##### Step 1: Installing node modules
@@ -26,7 +20,7 @@ npm install
 ```
 This installtion takes a while. Once the installation is complete,
 ```
-cd app
+cd frontend
 npm install
 ```
 and now everything is set and ready for launch.
