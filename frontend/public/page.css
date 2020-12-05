@@ -1,0 +1,30 @@
+* {
+  padding: 0;
+  margin: 0;
+  font-family: "Roboto", sans-serif;
+}
+
+.parent {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: #13293d;
+}
+
+input {
+  display: block;
+}
+
+.login {
+  margin: auto;
+}
+
+h1 {
+  font-size: 3em;
+  text-align: center;
+}
+
+label,
+h1 {
+  color: #fff;
+}
