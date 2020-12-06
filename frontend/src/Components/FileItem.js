@@ -6,7 +6,7 @@ class FileItem extends React.Component {
             <div style={{position: 'relative'}}>
                 <p style={itemStyle}>
                     {this.props.file}
-                    <button style={removeStyle}>Remove</button>
+                    {/* <button style={removeStyle}>Remove</button> */}
                     <button style={downloadStyle}>Download</button>
                 </p>
             </div>
@@ -31,13 +31,13 @@ const downloadStyle = {
     borderRadius: '8px'
 };
 
-const removeStyle = {
-    fontSize: '1.2em',
-    margin: '0 1em',
-    float: 'right',
-    border: '1.5px solid black',
-    borderRadius: '8px',
-    color: 'red'
-};
+// const removeStyle = {
+//     fontSize: '1.2em',
+//     margin: '0 1em',
+//     float: 'right',
+//     border: '1.5px solid black',
+//     borderRadius: '8px',
+//     color: 'red'
+// };
 
 export default FileItem;
