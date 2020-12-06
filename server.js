@@ -113,13 +113,17 @@ app.post('/upload/:class', (req, res) => {
 
 app.get('/allUploaded/:class', (req, res) => {
     var query = { 'class': req.params.class };
-    
+    var data = []
+
     mongo.connect(mongolink, mongoparams, (err, db) => {
         if(err) throw err;
 
         var classes = db.db('codex').collection('classes');
         classes.find(query).toArray((err, dbres) => {
-            res.send(dbres);
+            for(var i = 0; i<dbres.length; i++){
+                data.push(dbres[i]['file'])
+            }
+            res.send(data);
             db.close();
         });
     });
