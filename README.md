@@ -4,7 +4,7 @@
 ### Authors:
 >   Abhay Bhat
 
->   Aditya Shah
+>   Aaditya Shah
 
 >   Abhinav
 
