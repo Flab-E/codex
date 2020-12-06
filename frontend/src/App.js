@@ -24,24 +24,31 @@ class App extends React.Component {
   handleRegister = () => {
     var ele_id = document.getElementById('newusername');
     var ele_pass = document.getElementById('newpassword');
-    var query = `http://localhost:8080/put/user/${ele_id.value}/pass/${ele_pass.value}`;
-
+    var put_query = `http://localhost:8080/api/put/user/${ele_id.value}/pass/${ele_pass.value}`;
+    var get_query = `http://localhost:8080/api/get/user/${ele_id.value}/pass/${ele_pass.value}`;
+    
     if((ele_id.value.length>20) || (ele_id.value.length<6)) alert("username field must cintain at least 6 characters and at most 20 characters")
 
     if((ele_pass.value.length>20) || (ele_pass.value.length<6)) alert("password field must contain at least 6 characters and at most 20 characters")
 
 
-    axios.get(query).then(res => {
-        console.log(res.data);
-        if(res.data.ok) {
-            this.setState({isRegistered: true});
-            console.log(this.state);
-        }
-        else return;
+    axios.get(get_query).then(res => {
+      if(res.data !== ""){
+        axios.get(put_query).then(putres => {
+          console.log(putres.data);
+          if(putres.data.ok) {
+              this.setState({isRegistered: true});
+          }
+          else return;
+      }).then(err => {
+            console.log(err);
+      });
+      }
     }).then(err => {
-          console.log(err);
+      console.log(err)
     });
   }
+    
 
   onLogout = () => {
     this.setState({isLoggedIn: false});
@@ -58,9 +65,13 @@ class App extends React.Component {
           <Route path="/Login" render={({history}) => (<Login handleLogin={() => {
             var user_ele = document.getElementById('username');
             var pass_ele = document.getElementById('password');
-            var query = `http://localhost:8080/get/user/${user_ele.value}/pass/${pass_ele.value}`;
+            var query = `http://localhost:8080/api/get/user/${user_ele.value}/pass/${pass_ele.value}`;
+
+              console.log(user_ele.value)
+              console.log(pass_ele.value)
 
               axios.get(query).then(result => {
+                  console.log(result)
                   if(result.data === ""){
                       alert("invalid username and password");
                       return;

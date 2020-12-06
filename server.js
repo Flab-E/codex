@@ -6,7 +6,7 @@ const cors = require('cors')
 
 const app = express()
 const PORT =  process.env.PORT || 8080;
-const mongolink = process.env.MONGODB_URI || 'mongodb://localhost:27017/codex'
+const mongolink = 'mongodb://localhost:27017/codex';
 const mongoparams = {
     useUnifiedTopology: true,
     useNewUrlParser: true
@@ -19,7 +19,7 @@ if (process.env.NODE_ENV === 'production'){
     app.use(express.static('app/build'))
 }
 
-app.get('/get/user/:userid/pass/:password', (req, res) => {
+app.get('/api/get/user/:userid/pass/:password', (req, res) => {
     const data = {
         'username': req.params.userid,
         'password': req.params.password
@@ -37,7 +37,7 @@ app.get('/get/user/:userid/pass/:password', (req, res) => {
     });
 });
 
-app.get('/getall', (req, res) => {
+app.get('/api/getall', (req, res) => {
     data = [];
     mongo.connect(mongolink, mongoparams, (err, db) => {
         if(err) throw err;
@@ -51,7 +51,7 @@ app.get('/getall', (req, res) => {
     });
 });
 
-app.get('/put/user/:userid/pass/:password', (req, res) => {
+app.get('/api/put/user/:userid/pass/:password', (req, res) => {
     const data = {
         'username': req.params.userid,
         'password': req.params.password
@@ -68,6 +68,34 @@ app.get('/put/user/:userid/pass/:password', (req, res) => {
         });
     });
 });
+
+app.post('/api/single-file', (req, res) => {
+    const contentType = req.header('content-type');
+    if (contentType.includes('text/plain')) {
+        res.set('Content-Type', 'text/plain');
+        res.send(req.body);
+    } else if (contentType.includes('multipart/form-data')) {
+        f = req.files.myfile;
+        res.set('Content-Type', 'text/html');
+        f.mv('./uploads/' + f.name);
+        res.send(`
+            <table>
+                <tr><td>Name</td><td>${f.name}</td></tr>
+                <tr><td>Size</td><td>${f.size}</td></tr>
+                <tr><td>MIME type</td><td>${f.mimetype}</td></tr>
+            </table>
+        `);
+    } else {
+        res.set('Content-Type', contentType);
+        res.send(req.body);
+    }
+});
+
+app.get('/api/download', (req, res) => {
+    res.download('./uploads/' + f.name);
+
+});
+
 
 app.listen(PORT, (err) => {
     if (err) throw err;

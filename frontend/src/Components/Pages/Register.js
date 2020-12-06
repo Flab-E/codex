@@ -24,6 +24,8 @@ class Register extends React.Component {
                     <label htmlFor="newpassword">New password</label><input type="password" name="password" id="newpassword" onChange={this.dataChange} />
                     
                     <button id="registerbutton" onClick={this.props.handleRegister}><Link to="/Login" id="reglink">Register</Link></button>
+
+                    <div id="statusdiv" style={{color: '#fffbff'}}></div>
                 </div>
             </div>
         );
