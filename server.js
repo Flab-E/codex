@@ -86,11 +86,6 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage }).single('file')
 
 app.post('/upload/:class', (req, res) => {
-    var obj = {
-        'file': mongo_file,
-        'class': req.params.class
-    }
-
     upload(req, res, function (err) {
         if (err instanceof multer.MulterError) {
             console.log('errrr1');
@@ -99,20 +94,23 @@ app.post('/upload/:class', (req, res) => {
             console.log(err);
             return res.status(500).json(err)
         }
-        res.status(200).send(req.file)
-    });
+        var obj = {
+            'file' : res.req.file.filename,
+            'class': req.params.class
+        }
 
-    mongo.connect(mongolink, mongoparams, (err, db) => {
-        if(err) throw err;
-
-        var users = db.db('codex').collection('classes');
-
-        users.insertOne(obj, (err, dbres) => {
+        mongo.connect(mongolink, mongoparams, (err, db) => {
             if(err) throw err;
-            res.send(dbres.result);
+    
+            var users = db.db('codex').collection('classes');
+    
+            users.insertOne(obj, (err, dbres) => {
+                if(err) throw err;
+            });
         });
-    });
 
+        res.status(200).send(req.file);
+    });
 });
 
 app.get('/api/download', (req, res) => {
