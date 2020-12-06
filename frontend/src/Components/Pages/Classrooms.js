@@ -12,6 +12,19 @@ class DDCO extends React.Component {
             selectedFile: null
         };
     }
+    componentDidMount() {
+        window.addEventListener('load', this.handleLoad);
+    }
+    
+    componentWillUnmount() { 
+       window.removeEventListener('load', this.handleLoad)  
+    }
+    
+    handleLoad = () => {
+        axios.get('http://localhost:8080/allUploaded/ddco').then(res => {
+            this.setState({fileList: res.data});
+        });
+    }
 
     onChangeHandler = (event) => {
         this.setState({
@@ -67,6 +80,20 @@ class DSA extends React.Component {
             fileList: [],
             selectedFile: null
         };
+    }
+
+    componentDidMount() {
+        window.addEventListener('load', this.handleLoad);
+    }
+    
+    componentWillUnmount() { 
+       window.removeEventListener('load', this.handleLoad)  
+    }
+    
+    handleLoad = () => {
+        axios.get('http://localhost:8080/allUploaded/dsa').then(res => {
+            this.setState({fileList: res.data});
+        });
     }
 
     onChangeHandler = (event) => {
@@ -125,6 +152,20 @@ class SDS extends React.Component {
         };
     }
 
+    componentDidMount() {
+        window.addEventListener('load', this.handleLoad);
+    }
+    
+    componentWillUnmount() { 
+       window.removeEventListener('load', this.handleLoad)  
+    }
+    
+    handleLoad = () => {
+        axios.get('http://localhost:8080/allUploaded/sds').then(res => {
+            this.setState({fileList: res.data});
+        });
+    }
+
     onChangeHandler = (event) => {
         this.setState({
             selectedFile: event.target.files[0],
@@ -179,6 +220,20 @@ class WT extends React.Component {
             fileList: [],
             selectedFile: null
         };
+    }
+
+    componentDidMount() {
+        window.addEventListener('load', this.handleLoad);
+    }
+    
+    componentWillUnmount() { 
+       window.removeEventListener('load', this.handleLoad)  
+    }
+    
+    handleLoad = () => {
+        axios.get('http://localhost:8080/allUploaded/wt').then(res => {
+            this.setState({fileList: res.data});
+        });
     }
 
     onChangeHandler = (event) => {
@@ -240,6 +295,20 @@ class AFLL extends React.Component {
         this.setState({
             selectedFile: event.target.files[0],
             loaded: 0,
+        });
+    }
+
+    componentDidMount() {
+        window.addEventListener('load', this.handleLoad);
+    }
+    
+    componentWillUnmount() { 
+       window.removeEventListener('load', this.handleLoad)  
+    }
+    
+    handleLoad = () => {
+        axios.get('http://localhost:8080/allUploaded/afll').then(res => {
+            this.setState({fileList: res.data});
         });
     }
 
