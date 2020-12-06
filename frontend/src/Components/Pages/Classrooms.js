@@ -1,15 +1,23 @@
+import axios from 'axios';
 import React from 'react';
 import {UploadButton} from '../Buttons';
 import Files from '../Files';
 
 class DDCO extends React.Component {
-
     constructor(props) {
         super(props);
         this.fileInput = React.createRef();
         this.state = {
-            fileList: []
+            fileList: [],
+            selectedFile: null
         };
+    }
+
+    onChangeHandler = (event) => {
+        this.setState({
+            selectedFile: event.target.files[0],
+            loaded: 0,
+        });
     }
 
     handleSubmit = (event) => {
@@ -17,7 +25,18 @@ class DDCO extends React.Component {
         if (this.fileInput.current.files.length === 0) {
             alert('No files');
             return;
+        } else if (this.fileInput.current.files.length > 1) {
+            alert('Please select only 1 file');
+            return;
         }
+
+        const formData = new FormData();
+        formData.append('file', this.state.selectedFile);
+        var post_query = `http://localhost:8080/upload/ddco`;
+        axios.post(post_query, formData, {})
+        .then(res => {
+            console.log(res.statusText);
+        });
 
         this.setState(state => {
             const fileList = state.fileList.concat(this.fileInput.current.files[0].name);
@@ -29,23 +48,32 @@ class DDCO extends React.Component {
     render() {
         return (
             <div>
-                <h1 style={headingStyle}>Digital Design and Computer Organization</h1>
+                <h1 style={headingStyle}>Digital Design and Computer Organisation</h1>
                 <div style={{textAlign: 'center'}}>
-                    <UploadButton handleSubmit={this.handleSubmit} fileInput={this.fileInput} />
+                    <UploadButton onChange={this.onChangeHandler} handleSubmit={this.handleSubmit} fileInput={this.fileInput} />
                     <Files files={this.state.fileList} />
                 </div>
             </div>
         );
     }
 }
+
 
 class DSA extends React.Component {
     constructor(props) {
         super(props);
         this.fileInput = React.createRef();
         this.state = {
-            fileList: []
+            fileList: [],
+            selectedFile: null
         };
+    }
+
+    onChangeHandler = (event) => {
+        this.setState({
+            selectedFile: event.target.files[0],
+            loaded: 0,
+        });
     }
 
     handleSubmit = (event) => {
@@ -53,7 +81,18 @@ class DSA extends React.Component {
         if (this.fileInput.current.files.length === 0) {
             alert('No files');
             return;
+        } else if (this.fileInput.current.files.length > 1) {
+            alert('Please select only 1 file');
+            return;
         }
+
+        const formData = new FormData();
+        formData.append('file', this.state.selectedFile);
+        var post_query = `http://localhost:8080/upload/dsa`;
+        axios.post(post_query, formData, {})
+        .then(res => {
+            console.log(res.statusText);
+        });
 
         this.setState(state => {
             const fileList = state.fileList.concat(this.fileInput.current.files[0].name);
@@ -65,23 +104,32 @@ class DSA extends React.Component {
     render() {
         return (
             <div>
-                <h1 style={headingStyle}>Data Structures and Algorithms</h1>
+                <h1 style={headingStyle}>Data Structures and Applications</h1>
                 <div style={{textAlign: 'center'}}>
-                    <UploadButton handleSubmit={this.handleSubmit} fileInput={this.fileInput} />
+                    <UploadButton onChange={this.onChangeHandler} handleSubmit={this.handleSubmit} fileInput={this.fileInput} />
                     <Files files={this.state.fileList} />
                 </div>
             </div>
         );
     }
 }
+
 
 class SDS extends React.Component {
     constructor(props) {
         super(props);
         this.fileInput = React.createRef();
         this.state = {
-            fileList: []
+            fileList: [],
+            selectedFile: null
         };
+    }
+
+    onChangeHandler = (event) => {
+        this.setState({
+            selectedFile: event.target.files[0],
+            loaded: 0,
+        });
     }
 
     handleSubmit = (event) => {
@@ -89,7 +137,18 @@ class SDS extends React.Component {
         if (this.fileInput.current.files.length === 0) {
             alert('No files');
             return;
+        } else if (this.fileInput.current.files.length > 1) {
+            alert('Please select only 1 file');
+            return;
         }
+
+        const formData = new FormData();
+        formData.append('file', this.state.selectedFile);
+        var post_query = `http://localhost:8080/upload/sds`;
+        axios.post(post_query, formData, {})
+        .then(res => {
+            console.log(res.statusText);
+        });
 
         this.setState(state => {
             const fileList = state.fileList.concat(this.fileInput.current.files[0].name);
@@ -101,9 +160,9 @@ class SDS extends React.Component {
     render() {
         return (
             <div>
-                <h1 style={headingStyle}>Statistics for Data Science</h1>
+                <h1 style={headingStyle}>Statistics For Data Science</h1>
                 <div style={{textAlign: 'center'}}>
-                    <UploadButton handleSubmit={this.handleSubmit} fileInput={this.fileInput} />
+                    <UploadButton onChange={this.onChangeHandler} handleSubmit={this.handleSubmit} fileInput={this.fileInput} />
                     <Files files={this.state.fileList} />
                 </div>
             </div>
@@ -111,13 +170,22 @@ class SDS extends React.Component {
     }
 }
 
+
 class WT extends React.Component {
     constructor(props) {
         super(props);
         this.fileInput = React.createRef();
         this.state = {
-            fileList: []
+            fileList: [],
+            selectedFile: null
         };
+    }
+
+    onChangeHandler = (event) => {
+        this.setState({
+            selectedFile: event.target.files[0],
+            loaded: 0,
+        });
     }
 
     handleSubmit = (event) => {
@@ -125,7 +193,18 @@ class WT extends React.Component {
         if (this.fileInput.current.files.length === 0) {
             alert('No files');
             return;
+        } else if (this.fileInput.current.files.length > 1) {
+            alert('Please select only 1 file');
+            return;
         }
+
+        const formData = new FormData();
+        formData.append('file', this.state.selectedFile);
+        var post_query = `http://localhost:8080/upload/wt`;
+        axios.post(post_query, formData, {})
+        .then(res => {
+            console.log(res.statusText);
+        });
 
         this.setState(state => {
             const fileList = state.fileList.concat(this.fileInput.current.files[0].name);
@@ -139,7 +218,7 @@ class WT extends React.Component {
             <div>
                 <h1 style={headingStyle}>Web Technologies</h1>
                 <div style={{textAlign: 'center'}}>
-                    <UploadButton handleSubmit={this.handleSubmit} fileInput={this.fileInput} />
+                    <UploadButton onChange={this.onChangeHandler} handleSubmit={this.handleSubmit} fileInput={this.fileInput} />
                     <Files files={this.state.fileList} />
                 </div>
             </div>
@@ -152,8 +231,16 @@ class AFLL extends React.Component {
         super(props);
         this.fileInput = React.createRef();
         this.state = {
-            fileList: []
+            fileList: [],
+            selectedFile: null
         };
+    }
+
+    onChangeHandler = (event) => {
+        this.setState({
+            selectedFile: event.target.files[0],
+            loaded: 0,
+        });
     }
 
     handleSubmit = (event) => {
@@ -161,7 +248,18 @@ class AFLL extends React.Component {
         if (this.fileInput.current.files.length === 0) {
             alert('No files');
             return;
+        } else if (this.fileInput.current.files.length > 1) {
+            alert('Please select only 1 file');
+            return;
         }
+
+        const formData = new FormData();
+        formData.append('file', this.state.selectedFile);
+        var post_query = `http://localhost:8080/upload/afll`;
+        axios.post(post_query, formData, {})
+        .then(res => {
+            console.log(res.statusText);
+        });
 
         this.setState(state => {
             const fileList = state.fileList.concat(this.fileInput.current.files[0].name);
@@ -173,9 +271,9 @@ class AFLL extends React.Component {
     render() {
         return (
             <div>
-                <h1 style={headingStyle}>Automata Formal Languages and Logic</h1>
+                <h1 style={headingStyle}>Automata And Formal Language Logic</h1>
                 <div style={{textAlign: 'center'}}>
-                    <UploadButton handleSubmit={this.handleSubmit} fileInput={this.fileInput} />
+                    <UploadButton onChange={this.onChangeHandler} handleSubmit={this.handleSubmit} fileInput={this.fileInput} />
                     <Files files={this.state.fileList} />
                 </div>
             </div>
@@ -189,5 +287,6 @@ const headingStyle = {
     color: '#FFFBFF',
     padding: '0.8em'
 };
+
 
 export {DDCO, DSA, SDS, WT, AFLL};

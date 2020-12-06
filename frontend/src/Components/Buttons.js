@@ -22,7 +22,7 @@ class UploadButton extends React.Component {
         return (
             <div>
                 <form onSubmit={this.props.handleSubmit}>
-                    <input type="file" name="upload" id="upload" ref={this.props.fileInput} />
+                    <input type="file" name="upload" id="upload" onChange={this.props.onChange} ref={this.props.fileInput} />
                     <input type="submit" value="Upload"/>
                 </form>
             </div>

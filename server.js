@@ -3,6 +3,7 @@ const mongo = require('mongodb').MongoClient;
 const path = require('path')
 const morgan = require('morgan')
 const cors = require('cors')
+const multer = require('multer');
 
 const app = express()
 const PORT =  process.env.PORT || 8080;
@@ -14,13 +15,14 @@ const mongoparams = {
 
 app.use(morgan('tiny'));
 app.use(cors());
+app.use('/uploads', express.static('upluads'));
 
 if (process.env.NODE_ENV === 'production'){
     app.use(express.static('app/build'))
 }
 
 app.get('/api/get/user/:userid/pass/:password', (req, res) => {
-    const data = {
+    var data = {
         'username': req.params.userid,
         'password': req.params.password
     };
@@ -38,7 +40,7 @@ app.get('/api/get/user/:userid/pass/:password', (req, res) => {
 });
 
 app.get('/api/getall', (req, res) => {
-    data = [];
+    var data = [];
     mongo.connect(mongolink, mongoparams, (err, db) => {
         if(err) throw err;
 
@@ -69,26 +71,48 @@ app.get('/api/put/user/:userid/pass/:password', (req, res) => {
     });
 });
 
-app.post('/api/single-file', (req, res) => {
-    const contentType = req.header('content-type');
-    if (contentType.includes('text/plain')) {
-        res.set('Content-Type', 'text/plain');
-        res.send(req.body);
-    } else if (contentType.includes('multipart/form-data')) {
-        f = req.files.myfile;
-        res.set('Content-Type', 'text/html');
-        f.mv('./uploads/' + f.name);
-        res.send(`
-            <table>
-                <tr><td>Name</td><td>${f.name}</td></tr>
-                <tr><td>Size</td><td>${f.size}</td></tr>
-                <tr><td>MIME type</td><td>${f.mimetype}</td></tr>
-            </table>
-        `);
-    } else {
-        res.set('Content-Type', contentType);
-        res.send(req.body);
+var mongo_file = '';
+
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+    cb(null, 'uploads');
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' +file.originalname );
+    mongo_file = Date.now() + '-' + file.originalname;
+  }
+})
+
+var upload = multer({ storage: storage }).single('file')
+
+app.post('/upload/:class', (req, res) => {
+    var obj = {
+        'file': mongo_file,
+        'class': req.params.class
     }
+
+    upload(req, res, function (err) {
+        if (err instanceof multer.MulterError) {
+            console.log('errrr1');
+            return res.status(500).json(err)
+        } else if (err) {
+            console.log(err);
+            return res.status(500).json(err)
+        }
+        res.status(200).send(req.file)
+    });
+
+    mongo.connect(mongolink, mongoparams, (err, db) => {
+        if(err) throw err;
+
+        var users = db.db('codex').collection('classes');
+
+        users.insertOne(obj, (err, dbres) => {
+            if(err) throw err;
+            res.send(dbres.result);
+        });
+    });
+
 });
 
 app.get('/api/download', (req, res) => {

@@ -22,31 +22,36 @@ class App extends React.Component {
   }
 
   handleRegister = () => {
+    var ele_status = document.getElementById('statusdiv')
     var ele_id = document.getElementById('newusername');
     var ele_pass = document.getElementById('newpassword');
     var put_query = `http://localhost:8080/api/put/user/${ele_id.value}/pass/${ele_pass.value}`;
     var get_query = `http://localhost:8080/api/get/user/${ele_id.value}/pass/${ele_pass.value}`;
     
-    if((ele_id.value.length>20) || (ele_id.value.length<6)) alert("username field must cintain at least 6 characters and at most 20 characters")
+    if((ele_id.value.length>20) || (ele_id.value.length<6)) {
+      ele_status.innerHTML = "<p>username field must cintain at least 6 characters and at most 20 characters</p>";
+    } else if((ele_pass.value.length>20) || (ele_pass.value.length<6)) {
+      alert("password field must contain at least 6 characters and at most 20 characters")
+    } else {
+      axios.get(get_query).then(getres => {
+        if(getres.data === ""){
+          axios.get(put_query).then(putres => {
+            console.log(putres.data);
+            if(putres.data.ok) {
+                this.setState({isRegistered: true});
+            }
+            else return;
+          }).then(err => {
+              console.log(err);
+          });
 
-    if((ele_pass.value.length>20) || (ele_pass.value.length<6)) alert("password field must contain at least 6 characters and at most 20 characters")
-
-
-    axios.get(get_query).then(res => {
-      if(res.data !== ""){
-        axios.get(put_query).then(putres => {
-          console.log(putres.data);
-          if(putres.data.ok) {
-              this.setState({isRegistered: true});
-          }
-          else return;
-      }).then(err => {
-            console.log(err);
+          ele_status.innerHTML = "<p>Registration complete!</p>"
+        } else {
+          ele_status.innerHTML ='<p>username and password exists';
+        }
+        console.log(getres);
       });
-      }
-    }).then(err => {
-      console.log(err)
-    });
+    }
   }
     
 
