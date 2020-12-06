@@ -40,14 +40,12 @@ app.get('/api/get/user/:userid/pass/:password', (req, res) => {
 });
 
 app.get('/api/getall', (req, res) => {
-    var data = [];
     mongo.connect(mongolink, mongoparams, (err, db) => {
         if(err) throw err;
 
         users = db.db('codex').collection('users');
         users.find({}).toArray((err, dbres) => {
-            data = dbres;
-            res.send(data);
+            res.send(dbres);
             db.close();
         });
     });
@@ -113,7 +111,21 @@ app.post('/upload/:class', (req, res) => {
     });
 });
 
-app.get('/api/download', (req, res) => {
+app.get('/allUploaded/:class', (req, res) => {
+    var query = { 'class': req.params.class };
+    
+    mongo.connect(mongolink, mongoparams, (err, db) => {
+        if(err) throw err;
+
+        var classes = db.db('codex').collection('classes');
+        classes.find(query).toArray((err, dbres) => {
+            res.send(dbres);
+            db.close();
+        });
+    });
+});
+
+app.get('/download', (req, res) => {
     res.download('./uploads/' + f.name);
 
 });
