@@ -76,8 +76,8 @@ var storage = multer.diskStorage({
     cb(null, 'uploads');
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + '-' +file.originalname );
-    mongo_file = Date.now() + '-' + file.originalname;
+    cb(null, file.originalname );
+    mongo_file = file.originalname;
   }
 })
 
@@ -129,9 +129,8 @@ app.get('/allUploaded/:class', (req, res) => {
     });
 });
 
-app.get('/download', (req, res) => {
-    res.download('./uploads/' + f.name);
-
+app.get('/download/:file', (req, res) => {
+    res.download('./uploads/' + req.params.file);
 });
 
 

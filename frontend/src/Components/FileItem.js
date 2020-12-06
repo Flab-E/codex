@@ -7,7 +7,7 @@ class FileItem extends React.Component {
                 <p style={itemStyle}>
                     {this.props.file}
                     {/* <button style={removeStyle}>Remove</button> */}
-                    <button style={downloadStyle}>Download</button>
+                    <a style={downloadStyle} href={'http://localhost:8080/download/'+this.props.file}>Download</a>
                 </p>
             </div>
         );

@@ -12,19 +12,7 @@ class DDCO extends React.Component {
             selectedFile: null
         };
     }
-    // componentDidMount() {
-    //     window.addEventListener('load', this.handleLoad);
-    // }
-    
-    // componentWillUnmount() { 
-    //    window.removeEventListener('load', this.handleLoad)  
-    // }
-    
-    // handleLoad = () => {
-    //     axios.get('http://localhost:8080/allUploaded/ddco').then(res => {
-    //         this.setState({fileList: res.data});
-    //     });
-    // }
+
 
     componentWillMount() {
         axios.get('http://localhost:8080/allUploaded/ddco').then(res => {
