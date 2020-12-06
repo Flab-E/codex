@@ -12,15 +12,21 @@ class DDCO extends React.Component {
             selectedFile: null
         };
     }
-    componentDidMount() {
-        window.addEventListener('load', this.handleLoad);
-    }
+    // componentDidMount() {
+    //     window.addEventListener('load', this.handleLoad);
+    // }
     
-    componentWillUnmount() { 
-       window.removeEventListener('load', this.handleLoad)  
-    }
+    // componentWillUnmount() { 
+    //    window.removeEventListener('load', this.handleLoad)  
+    // }
     
-    handleLoad = () => {
+    // handleLoad = () => {
+    //     axios.get('http://localhost:8080/allUploaded/ddco').then(res => {
+    //         this.setState({fileList: res.data});
+    //     });
+    // }
+
+    componentWillMount() {
         axios.get('http://localhost:8080/allUploaded/ddco').then(res => {
             this.setState({fileList: res.data});
         });
@@ -82,15 +88,7 @@ class DSA extends React.Component {
         };
     }
 
-    componentDidMount() {
-        window.addEventListener('load', this.handleLoad);
-    }
-    
-    componentWillUnmount() { 
-       window.removeEventListener('load', this.handleLoad)  
-    }
-    
-    handleLoad = () => {
+    componentWillMount() {
         axios.get('http://localhost:8080/allUploaded/dsa').then(res => {
             this.setState({fileList: res.data});
         });
@@ -152,15 +150,7 @@ class SDS extends React.Component {
         };
     }
 
-    componentDidMount() {
-        window.addEventListener('load', this.handleLoad);
-    }
-    
-    componentWillUnmount() { 
-       window.removeEventListener('load', this.handleLoad)  
-    }
-    
-    handleLoad = () => {
+    componentWillMount() {
         axios.get('http://localhost:8080/allUploaded/sds').then(res => {
             this.setState({fileList: res.data});
         });
@@ -222,15 +212,7 @@ class WT extends React.Component {
         };
     }
 
-    componentDidMount() {
-        window.addEventListener('load', this.handleLoad);
-    }
-    
-    componentWillUnmount() { 
-       window.removeEventListener('load', this.handleLoad)  
-    }
-    
-    handleLoad = () => {
+    componentWillMount() {
         axios.get('http://localhost:8080/allUploaded/wt').then(res => {
             this.setState({fileList: res.data});
         });
@@ -298,15 +280,7 @@ class AFLL extends React.Component {
         });
     }
 
-    componentDidMount() {
-        window.addEventListener('load', this.handleLoad);
-    }
-    
-    componentWillUnmount() { 
-       window.removeEventListener('load', this.handleLoad)  
-    }
-    
-    handleLoad = () => {
+    componentWillMount() {
         axios.get('http://localhost:8080/allUploaded/afll').then(res => {
             this.setState({fileList: res.data});
         });
